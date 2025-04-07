@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>렉 유발 테스트</title>
+  <script>
+    // 무한 루프로 CPU 사용률 높이기
+    function freezeCPU() {
+      while (true) {
+        // 아무 일도 안 하면서 CPU 계속 씀
+        Math.random();
+      }
+    }
+
+    // 엄청난 양의 DOM 요소 만들기
+    function createTonsOfElements() {
+      for (let i = 0; i < 100000; i++) {
+        const div = document.createElement('div');
+        div.innerText = '렉 유발 중... ' + i;
+        document.body.appendChild(div);
+      }
+    }
+
+    // 메모리 폭발용 배열 채우기
+    function eatMemory() {
+      const arr = [];
+      setInterval(() => {
+        for (let i = 0; i < 1000000; i++) {
+          arr.push(new Array(100).fill('렉'));
+        }
+      }, 100);
+    }
+
+    window.onload = function() {
+      // 동시에 실행
+      setTimeout(() => {
+        createTonsOfElements();
+        eatMemory();
+        freezeCPU(); // 마지막에 호출: 이건 브라우저 멈춤 가능성 있음
+      }, 1000); // 1초 뒤 실행
+    };
+  </script>
+</head>
+<body>
+  <h1>렉 걸리는 중...</h1>
+</body>
+</html>
